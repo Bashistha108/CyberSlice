@@ -2,6 +2,7 @@ package de.hsh.app.objects;
 
 import de.hsh.app.GameController;
 import de.hsh.app.SpielObjekt;
+import java.awt.Color;
 
 public class Virus extends SpielObjekt {
     public Virus(float posX, float posY, float geschwindigkeit) {
@@ -12,8 +13,12 @@ public class Virus extends SpielObjekt {
     public void onSlice(GameController controller) {
         controller.updatePunkte(10);
     }
+
+    public static Color getColor() {
+        return new Color(220, 20, 60);
+    }
+
+    public static String getDisplayName() {
+        return "Virus";
+    }
 }
-
-
-
-

@@ -18,7 +18,6 @@ public class CyberSliceFassade {
         this.gameController = new GameController(this.gameModel, persistence);
     }
 
-
     public static CyberSliceFassade getInstance() {
         if (instance == null) {
             instance = new CyberSliceFassade();
@@ -38,6 +37,10 @@ public class CyberSliceFassade {
         gameController.spielFortsetzen();
     }
 
+    public void spielStoppen() {
+        gameController.spielStoppen();
+    }
+
     public void objektSchneiden(int x, int y) {
         gameController.checkKollission(x, y);
     }
@@ -52,5 +55,9 @@ public class CyberSliceFassade {
 
     public GameModel getGameModel() {
         return gameModel;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

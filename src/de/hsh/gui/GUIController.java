@@ -1,6 +1,5 @@
 package de.hsh.gui;
 
-
 import de.hsh.app.CyberSliceFassade;
 import de.hsh.app.Level;
 import de.hsh.app.MainFrame;
@@ -29,6 +28,11 @@ public class GUIController {
         mainFrame.showPanel("Spiel");
     }
 
+    public void onBackToMenuClicked() {
+        appFassade.spielStoppen();
+        mainFrame.showPanel("Hauptmenü");
+    }
+
     public void onExitClicked() {
         System.exit(0);
     }
@@ -41,10 +45,12 @@ public class GUIController {
 
     public void onLevelAuswahlClicked() {
         System.out.println("GUIController: Level-Auswahl anzeigen");
+        mainFrame.showPanel("LevelAuswahl");
     }
 
     public void onAnleitungClicked() {
         System.out.println("GUIController: Anleitung anzeigen");
+        mainFrame.showPanel("Anleitung");
     }
 
     public void onMausBewegung(int x, int y) {
