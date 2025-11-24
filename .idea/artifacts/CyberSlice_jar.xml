@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CyberSlice:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CyberSlice_jar</output-path>
+    <root id="archive" name="CyberSlice.jar">
+      <element id="module-output" name="CyberSlice" />
+    </root>
+  </artifact>
+</component>

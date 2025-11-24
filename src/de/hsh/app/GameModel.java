@@ -1,35 +1,37 @@
 package de.hsh.app;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 public class GameModel extends Observable {
     private int punkte;
-    private int lebem;
+    private int leben;
     private int zeit;
     private Level level;
     private boolean isPowerMode;
     private String playerName;
 
-    // Objektliste notwendig für das Obeserver Pattern, damit
-    // das Spielpanel weiß was er zeichnen soll.
-    private List<SpielObjekt> objektListe;
 
+    private List<SpielObjekt> objektListe;
 
     public GameModel() {
         this.punkte = 0;
-        this.lebem = 3;
+        this.leben = 3;
         this.zeit = 90;
         this.isPowerMode = false;
         this.playerName = "Player";
+        this.objektListe = new ArrayList<>();
     }
 
     public void resetGame(){
         this.punkte = 0;
-        this.lebem = 3;
+        this.leben = 3;
         this.zeit = 90;
         this.isPowerMode = false;
-        this.objektListe.clear();
+        if(objektListe != null){
+            this.objektListe.clear();
+        }
         setChanged();
         notifyObservers();
     }
@@ -42,12 +44,12 @@ public class GameModel extends Observable {
         this.punkte = punkte;
     }
 
-    public int getLebem() {
-        return lebem;
+    public int getLeben() {
+        return leben;
     }
 
-    public void setLebem(int lebem) {
-        this.lebem = lebem;
+    public void setLeben(int leben) {
+        this.leben = leben;
     }
 
     public int getZeit() {
@@ -80,6 +82,15 @@ public class GameModel extends Observable {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public List<SpielObjekt> getObjektListe() {
+        return objektListe;
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
     }
 
 }
