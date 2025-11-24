@@ -1,8 +1,8 @@
 package de.hsh.app.objects;
 
-
 import de.hsh.app.GameController;
 import de.hsh.app.SpielObjekt;
+import java.awt.Color;
 
 public class Antivirus extends SpielObjekt {
     public Antivirus(float posX, float posY, float geschwindigkeit) {
@@ -13,5 +13,13 @@ public class Antivirus extends SpielObjekt {
     public void onSlice(GameController controller) {
         controller.updatePunkte(-10);
         controller.updateLeben(-1);
+    }
+
+    public static Color getColor() {
+        return new Color(50, 205, 50);
+    }
+
+    public static String getDisplayName() {
+        return "Antivirus";
     }
 }

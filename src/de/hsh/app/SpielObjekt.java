@@ -23,8 +23,25 @@ public abstract class SpielObjekt {
                 y >= posY && y <= posY + height;
     }
 
+    public boolean isOffScreen(int screenHeight) {
+        return posY > screenHeight + height;
+    }
+
     public abstract void onSlice(GameController controller);
 
-    public float getPosX() { return posX; }
-    public float getPosY() { return posY; }
+    public float getPosX() {
+        return posX;
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
