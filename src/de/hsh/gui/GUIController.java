@@ -28,6 +28,14 @@ public class GUIController {
         mainFrame.showPanel("Spiel");
     }
 
+    public void onRestartClicked() {
+        Level currentLevel = appFassade.getGameModel().getLevel();
+        if (currentLevel == null) {
+            currentLevel = Level.EASY;
+        }
+        appFassade.spielStarten(currentLevel);
+    }
+
     public void onBackToMenuClicked() {
         appFassade.spielStoppen();
         mainFrame.showPanel("Hauptmenü");

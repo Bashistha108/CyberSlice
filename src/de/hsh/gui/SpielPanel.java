@@ -19,7 +19,10 @@ public class SpielPanel extends JPanel implements Observer {
     private AnimationManager animationManager;
     private JButton pauseButton;
     private JButton backButton;
+    private JButton restartButton;
+    private JButton menuButtonGameOver;
     private boolean isPaused = false;
+    private boolean gameOverButtonsAdded = false;
 
     public SpielPanel(GameModel gameModel, GUIController guiController) {
         this.gameModel = gameModel;
@@ -73,12 +76,59 @@ public class SpielPanel extends JPanel implements Observer {
         });
         add(backButton);
 
+        // Create game over buttons (initially hidden)
+        restartButton = new JButton("Restart");
+        restartButton.setBounds(getWidth() / 2 - 110, getHeight() / 2 + 80, 100, 40);
+        styleButton(restartButton, new Color(50, 150, 50));
+        restartButton.addActionListener(e -> {
+            hideGameOverButtons();
+            guiController.onRestartClicked();
+        });
+        restartButton.setVisible(false);
+        add(restartButton);
+
+        menuButtonGameOver = new JButton("Menu");
+        menuButtonGameOver.setBounds(getWidth() / 2 + 10, getHeight() / 2 + 80, 100, 40);
+        styleButton(menuButtonGameOver, new Color(150, 50, 50));
+        menuButtonGameOver.addActionListener(e -> {
+            hideGameOverButtons();
+            guiController.onBackToMenuClicked();
+        });
+        menuButtonGameOver.setVisible(false);
+        add(menuButtonGameOver);
+
         // Animation timer
         Timer animationTimer = new Timer(16, e -> {
             animationManager.update();
+            updateGameOverButtons();
+
             repaint();
         });
         animationTimer.start();
+    }
+
+    private void updateGameOverButtons() {
+        boolean isGameOver = guiController.getAppFassade().getGameController().isGameOver();
+        if (isGameOver && !gameOverButtonsAdded) {
+            showGameOverButtons();
+        } else if (!isGameOver && gameOverButtonsAdded) {
+            hideGameOverButtons();
+        }
+    }
+
+    private void showGameOverButtons() {
+        gameOverButtonsAdded = true;
+        restartButton.setVisible(true);
+        menuButtonGameOver.setVisible(true);
+        // Update button positions based on current size
+        restartButton.setBounds(getWidth() / 2 - 110, getHeight() / 2 + 80, 100, 40);
+        menuButtonGameOver.setBounds(getWidth() / 2 + 10, getHeight() / 2 + 80, 100, 40);
+    }
+
+    private void hideGameOverButtons() {
+        gameOverButtonsAdded = false;
+        restartButton.setVisible(false);
+        menuButtonGameOver.setVisible(false);
     }
 
     private void styleButton(JButton button, Color color) {
@@ -299,6 +349,7 @@ public class SpielPanel extends JPanel implements Observer {
         int textWidth = fm.stringWidth(gameOverText);
         g2.drawString(gameOverText, (getWidth() - textWidth) / 2, getHeight() / 2 - 50);
 
+        fm = g2.getFontMetrics();
         // Final score
         g2.setColor(new Color(255, 215, 0));
         g2.setFont(new Font("Arial", Font.BOLD, 30));
