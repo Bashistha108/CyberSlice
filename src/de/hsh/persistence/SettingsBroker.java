@@ -1,6 +1,7 @@
 package de.hsh.persistence;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * Concrete implementation of the PersistenceFassade.
@@ -9,11 +10,16 @@ import java.io.*;
 public class SettingsBroker implements PersistenceFassade {
 
     private static final String FILE_NAME = "settings.ser";
+    private LeaderboardBroker leaderboardBroker;
+
+    public SettingsBroker() {
+        this.leaderboardBroker = new LeaderboardBroker();
+    }
 
     @Override
     public void saveSettings(UserSettings settings) {
         try (FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
 
             out.writeObject(settings);
             System.out.println("Settings saved successfully to " + FILE_NAME);
@@ -31,7 +37,7 @@ public class SettingsBroker implements PersistenceFassade {
 
         if (file.exists()) {
             try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
-                 ObjectInputStream in = new ObjectInputStream(fileIn)) {
+                    ObjectInputStream in = new ObjectInputStream(fileIn)) {
 
                 settings = (UserSettings) in.readObject();
                 System.out.println("Settings loaded successfully.");
@@ -50,5 +56,15 @@ public class SettingsBroker implements PersistenceFassade {
         }
 
         return settings;
+    }
+
+    @Override
+    public boolean addScore(LeaderboardEntry entry) {
+        return leaderboardBroker.addScore(entry);
+    }
+
+    @Override
+    public List<LeaderboardEntry> getTop10() {
+        return leaderboardBroker.getTop10();
     }
 }

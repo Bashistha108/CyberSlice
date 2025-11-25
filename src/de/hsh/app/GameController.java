@@ -98,29 +98,37 @@ public class GameController {
         float startY = -50;
         float speed = (float) model.getLevel().getObjectSpeed();
         SpielObjekt neuesObjekt;
-        int typ = random.nextInt(7);
-        switch (typ) {
-            case 0:
-                neuesObjekt = new Virus(startX, startY, speed);
-                break;
-            case 1:
-                neuesObjekt = new Antivirus(startX, startY, speed);
-                break;
-            case 2:
-                neuesObjekt = new Datei(startX, startY, speed);
-                break;
-            case 3:
-                neuesObjekt = new UltraVirus(startX, startY, speed);
-                break;
-            case 4:
-                neuesObjekt = new UltraAntivirus(startX, startY, speed);
-                break;
-            case 5:
-                neuesObjekt = new Uhr(startX, startY, speed);
-                break;
-            default:
-                neuesObjekt = new USBStick(startX, startY, speed);
-                break;
+        int typ = random.nextInt(100); // Changed to 100 for percentage-based spawning
+
+        if (typ < 5) {
+            // 5% chance for Life (rare)
+            neuesObjekt = new Life(startX, startY, speed);
+        } else {
+            // Remaining 95% distributed among other objects
+            int objectType = random.nextInt(7);
+            switch (objectType) {
+                case 0:
+                    neuesObjekt = new Virus(startX, startY, speed);
+                    break;
+                case 1:
+                    neuesObjekt = new Antivirus(startX, startY, speed);
+                    break;
+                case 2:
+                    neuesObjekt = new Datei(startX, startY, speed);
+                    break;
+                case 3:
+                    neuesObjekt = new UltraVirus(startX, startY, speed);
+                    break;
+                case 4:
+                    neuesObjekt = new UltraAntivirus(startX, startY, speed);
+                    break;
+                case 5:
+                    neuesObjekt = new Uhr(startX, startY, speed);
+                    break;
+                default:
+                    neuesObjekt = new USBStick(startX, startY, speed);
+                    break;
+            }
         }
         objektList.add(neuesObjekt);
     }
@@ -143,7 +151,17 @@ public class GameController {
             if (!isGameOver) {
                 spielPausieren();
                 isGameOver = true;
-                System.out.println("Spiel beendet! Punkte: " + model.getPunkte());
+
+                // Submit score to leaderboard
+                String playerName = model.getPlayerName();
+                int score = model.getPunkte();
+                String level = model.getLevel().name();
+
+                de.hsh.persistence.LeaderboardEntry entry = new de.hsh.persistence.LeaderboardEntry(playerName, score,
+                        level);
+                persistence.addScore(entry);
+
+                System.out.println("Spiel beendet! Punkte: " + score);
             }
         }
     }

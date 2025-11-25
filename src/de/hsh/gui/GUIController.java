@@ -7,6 +7,7 @@ import de.hsh.app.MainFrame;
 public class GUIController {
     private CyberSliceFassade appFassade;
     private MainFrame mainFrame;
+    private Level currentLevel;
 
     public GUIController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -15,6 +16,7 @@ public class GUIController {
 
     public void onSpielStartenClicked(Level level) {
         System.out.println("GUIController: Spiel wird gestartet (Level: " + level + ")");
+        this.currentLevel = level;
         appFassade.spielStarten(level);
         mainFrame.showPanel("Spiel");
     }
@@ -31,6 +33,17 @@ public class GUIController {
     public void onBackToMenuClicked() {
         appFassade.spielStoppen();
         mainFrame.showPanel("Hauptmenü");
+    }
+
+    public void onRestartGameClicked() {
+        System.out.println("GUIController: Restarting game with level: " + currentLevel);
+        appFassade.spielStarten(currentLevel);
+        mainFrame.showPanel("Spiel");
+    }
+
+    public void onLeaderboardClicked() {
+        System.out.println("GUIController: Showing leaderboard");
+        mainFrame.showPanel("Leaderboard");
     }
 
     public void onExitClicked() {
@@ -59,5 +72,9 @@ public class GUIController {
 
     public CyberSliceFassade getAppFassade() {
         return appFassade;
+    }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 }
