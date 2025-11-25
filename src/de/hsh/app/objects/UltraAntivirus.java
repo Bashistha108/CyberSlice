@@ -7,6 +7,8 @@ import java.awt.Color;
 public class UltraAntivirus extends SpielObjekt {
     public UltraAntivirus(float posX, float posY, float geschwindigkeit) {
         super(posX, posY, geschwindigkeit);
+        this.width = 70;
+        this.height = 70;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class UltraAntivirus extends SpielObjekt {
     }
 
     public static Color getColor() {
-        return new Color(0, 128, 0);
+        return new Color(34, 139, 34); // Forest Green
     }
 
     public static String getDisplayName() {

@@ -73,9 +73,42 @@ public class SpielPanel extends JPanel implements Observer {
         });
         add(backButton);
 
+        // Game Over buttons (initially hidden)
+        JButton restartButton = new JButton("🔄 RESTART");
+        restartButton.setBounds(getWidth() / 2 - 220, getHeight() / 2 + 80, 200, 50);
+        styleButton(restartButton, new Color(50, 150, 50));
+        restartButton.addActionListener(e -> {
+            guiController.onRestartGameClicked();
+        });
+        restartButton.setVisible(false);
+        add(restartButton);
+
+        JButton menuButton = new JButton("🏠 MENU");
+        menuButton.setBounds(getWidth() / 2 + 20, getHeight() / 2 + 80, 200, 50);
+        styleButton(menuButton, new Color(150, 50, 50));
+        menuButton.addActionListener(e -> {
+            restartButton.setVisible(false);
+            menuButton.setVisible(false);
+            guiController.onBackToMenuClicked();
+        });
+        menuButton.setVisible(false);
+        add(menuButton);
+
         // Animation timer
         Timer animationTimer = new Timer(16, e -> {
             animationManager.update();
+
+            // Show/hide game over buttons based on game state
+            boolean gameOver = guiController.getAppFassade().getGameController().isGameOver();
+            restartButton.setVisible(gameOver);
+            menuButton.setVisible(gameOver);
+
+            // Update button positions based on current panel size
+            if (gameOver) {
+                restartButton.setBounds(getWidth() / 2 - 220, getHeight() / 2 + 80, 200, 50);
+                menuButton.setBounds(getWidth() / 2 + 20, getHeight() / 2 + 80, 200, 50);
+            }
+
             repaint();
         });
         animationTimer.start();
@@ -135,6 +168,8 @@ public class SpielPanel extends JPanel implements Observer {
             return Uhr.getColor();
         if (obj instanceof USBStick)
             return USBStick.getColor();
+        if (obj instanceof Life)
+            return Life.getColor();
         return Color.WHITE;
     }
 
@@ -229,6 +264,8 @@ public class SpielPanel extends JPanel implements Observer {
             return "⏰";
         if (obj instanceof USBStick)
             return "⚡";
+        if (obj instanceof Life)
+            return "❤";
         return "?";
     }
 
@@ -297,22 +334,31 @@ public class SpielPanel extends JPanel implements Observer {
         String gameOverText = "GAME OVER";
         FontMetrics fm = g2.getFontMetrics();
         int textWidth = fm.stringWidth(gameOverText);
-        g2.drawString(gameOverText, (getWidth() - textWidth) / 2, getHeight() / 2 - 50);
+        g2.drawString(gameOverText, (getWidth() - textWidth) / 2, getHeight() / 2 - 80);
+
+        // Player name
+        g2.setColor(new Color(200, 200, 255));
+        g2.setFont(new Font("Arial", Font.BOLD, 24));
+        String playerText = gameModel.getPlayerName();
+        fm = g2.getFontMetrics();
+        textWidth = fm.stringWidth(playerText);
+        g2.drawString(playerText, (getWidth() - textWidth) / 2, getHeight() / 2 - 30);
 
         // Final score
         g2.setColor(new Color(255, 215, 0));
-        g2.setFont(new Font("Arial", Font.BOLD, 30));
-        String scoreText = "Final Score: " + gameModel.getPunkte();
+        g2.setFont(new Font("Arial", Font.BOLD, 36));
+        String scoreText = "Score: " + gameModel.getPunkte();
+        fm = g2.getFontMetrics();
         textWidth = fm.stringWidth(scoreText);
         g2.drawString(scoreText, (getWidth() - textWidth) / 2, getHeight() / 2 + 20);
 
-        // Instructions
+        // Level
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
-        String instruction = "Click 'Menu' to return";
+        String levelText = "Level: " + gameModel.getLevel().name();
         fm = g2.getFontMetrics();
-        textWidth = fm.stringWidth(instruction);
-        g2.drawString(instruction, (getWidth() - textWidth) / 2, getHeight() / 2 + 70);
+        textWidth = fm.stringWidth(levelText);
+        g2.drawString(levelText, (getWidth() - textWidth) / 2, getHeight() / 2 + 50);
     }
 
     @Override

@@ -8,12 +8,13 @@ public class CyberSliceFassade {
     private static CyberSliceFassade instance;
     private GameController gameController;
     private GameModel gameModel;
+    private PersistenceFassade persistence;
 
     private CyberSliceFassade() {
 
         this.gameModel = new GameModel();
 
-        PersistenceFassade persistence = new SettingsBroker();
+        this.persistence = new SettingsBroker();
 
         this.gameController = new GameController(this.gameModel, persistence);
     }
@@ -59,5 +60,9 @@ public class CyberSliceFassade {
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    public PersistenceFassade getPersistence() {
+        return persistence;
     }
 }

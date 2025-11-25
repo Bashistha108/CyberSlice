@@ -94,6 +94,15 @@ public class SettingsPanel extends JPanel {
         buttonPanel.add(backButton);
 
         add(buttonPanel, gbc);
+
+        // Load current settings
+        loadSettings();
+    }
+
+    public void loadSettings() {
+        de.hsh.persistence.UserSettings settings = guiController.getAppFassade().getPersistence().loadSettings();
+        nameField.setText(settings.getPlayerName());
+        volumeSlider.setValue((int) (settings.getVolume() * 100));
     }
 
     @Override

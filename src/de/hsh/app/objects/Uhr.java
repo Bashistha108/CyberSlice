@@ -15,7 +15,7 @@ public class Uhr extends SpielObjekt {
     }
 
     public static Color getColor() {
-        return new Color(0, 191, 255);
+        return new Color(0, 255, 255); // Cyan
     }
 
     public static String getDisplayName() {

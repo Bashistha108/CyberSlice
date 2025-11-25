@@ -15,7 +15,7 @@ public class Virus extends SpielObjekt {
     }
 
     public static Color getColor() {
-        return new Color(220, 20, 60);
+        return new Color(255, 99, 71); // Tomato Red
     }
 
     public static String getDisplayName() {

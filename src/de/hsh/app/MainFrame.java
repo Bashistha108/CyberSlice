@@ -1,6 +1,7 @@
 package de.hsh.app;
 
 import de.hsh.gui.GUIController;
+import de.hsh.gui.LeaderboardPanel;
 import de.hsh.gui.SettingsPanel;
 import de.hsh.gui.SpielPanel;
 
@@ -38,6 +39,7 @@ public class MainFrame extends JFrame {
         JPanel hauptMenuPanel = createHauptMenuPanel();
         SpielPanel spielPanel = new SpielPanel(gameModel, guiController);
         SettingsPanel settingsPanel = new SettingsPanel(guiController);
+        LeaderboardPanel leaderboardPanel = new LeaderboardPanel(guiController);
         JPanel levelAuswahlPanel = createLevelAuswahlPanel();
         JPanel anleitungPanel = createAnleitungPanel();
 
@@ -45,6 +47,7 @@ public class MainFrame extends JFrame {
         cardPanel.add(hauptMenuPanel, "Hauptmenü");
         cardPanel.add(spielPanel, "Spiel");
         cardPanel.add(settingsPanel, "Einstellungen");
+        cardPanel.add(leaderboardPanel, "Leaderboard");
         cardPanel.add(levelAuswahlPanel, "LevelAuswahl");
         cardPanel.add(anleitungPanel, "Anleitung");
 
@@ -116,6 +119,11 @@ public class MainFrame extends JFrame {
         JButton levelButton = createStyledButton("🎯 SELECT LEVEL", new Color(100, 100, 200));
         levelButton.addActionListener(e -> guiController.onLevelAuswahlClicked());
         panel.add(levelButton, gbc);
+
+        // Leaderboard Button
+        JButton leaderboardButton = createStyledButton("🏆 LEADERBOARD", new Color(200, 150, 50));
+        leaderboardButton.addActionListener(e -> guiController.onLeaderboardClicked());
+        panel.add(leaderboardButton, gbc);
 
         // Settings Button
         JButton settingsButton = createStyledButton("⚙ SETTINGS", new Color(150, 100, 50));
