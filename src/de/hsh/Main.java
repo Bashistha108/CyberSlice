@@ -3,7 +3,7 @@ package de.hsh;
 import de.hsh.app.MainFrame;
 import javax.swing.SwingUtilities;
 
-
+// java -cp out/production/CyberSlice de.hsh.Main
 public class Main {
     public static void main(String[] args) {
 

@@ -15,6 +15,7 @@ public class UltraAntivirus extends SpielObjekt {
     public void onSlice(GameController controller) {
         controller.updatePunkte(-20);
         controller.updateLeben(-2);
+        controller.playAntivirusChoppedSound();
     }
 
     public static Color getColor() {

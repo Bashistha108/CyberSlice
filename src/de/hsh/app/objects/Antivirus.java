@@ -13,6 +13,7 @@ public class Antivirus extends SpielObjekt {
     public void onSlice(GameController controller) {
         controller.updatePunkte(-10);
         controller.updateLeben(-1);
+        controller.playAntivirusChoppedSound();
     }
 
     public static Color getColor() {

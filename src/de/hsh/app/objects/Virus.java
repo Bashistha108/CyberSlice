@@ -12,6 +12,7 @@ public class Virus extends SpielObjekt {
     @Override
     public void onSlice(GameController controller) {
         controller.updatePunkte(10);
+        controller.playVirusChoppedSound();
     }
 
     public static Color getColor() {
