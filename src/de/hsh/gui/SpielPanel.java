@@ -20,11 +20,39 @@ public class SpielPanel extends JPanel implements Observer {
     private JButton pauseButton;
     private JButton backButton;
     private boolean isPaused = false;
+    private Image virusImage;
+    private Image antivirusImage;
 
     public SpielPanel(GameModel gameModel, GUIController guiController) {
         this.gameModel = gameModel;
         this.guiController = guiController;
         this.animationManager = new AnimationManager();
+
+        // Load virus image
+        try {
+            java.net.URL imgUrl = getClass().getResource("/de/hsh/images/virus.png");
+            if (imgUrl != null) {
+                virusImage = javax.imageio.ImageIO.read(imgUrl);
+            } else {
+                System.err.println("Virus image not found at /de/hsh/images/virus.png");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Load antivirus image
+        try {
+            java.net.URL imgUrlAntivirus = getClass().getResource("/de/hsh/images/antivirus.png");
+            if (imgUrlAntivirus != null) {
+                antivirusImage = javax.imageio.ImageIO.read(imgUrlAntivirus);
+                System.out.println("DEBUG: Antivirus image loaded successfully.");
+            } else {
+                System.err.println("Antivirus image not found at /de/hsh/images/antivirus.png");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading antivirus image:");
+            e.printStackTrace();
+        }
 
         setLayout(null); // Use absolute positioning for buttons
 
@@ -216,6 +244,33 @@ public class SpielPanel extends JPanel implements Observer {
         int x = (int) obj.getPosX();
         int y = (int) obj.getPosY();
         int size = obj.getWidth();
+
+        // Use image for Virus and UltraVirus if loaded
+        if (virusImage != null && (obj instanceof Virus || obj instanceof UltraVirus)) {
+            g2.drawImage(virusImage, x, y, size, size, null);
+
+            // Optional: Draw a subtle glow/outline to distinguish UltraVirus or make them
+            // pop
+            if (obj instanceof UltraVirus) {
+                g2.setColor(new Color(255, 0, 0, 100)); // Red glow
+                g2.setStroke(new BasicStroke(3));
+                g2.drawOval(x - 2, y - 2, size + 4, size + 4);
+            }
+            return;
+        }
+
+        // Use image for Antivirus and UltraAntivirus if loaded
+        if (antivirusImage != null && (obj instanceof Antivirus || obj instanceof UltraAntivirus)) {
+            g2.drawImage(antivirusImage, x, y, size, size, null);
+
+            // Optional: Draw a subtle glow/outline for UltraAntivirus
+            if (obj instanceof UltraAntivirus) {
+                g2.setColor(new Color(0, 255, 0, 100)); // Green glow
+                g2.setStroke(new BasicStroke(3));
+                g2.drawOval(x - 2, y - 2, size + 4, size + 4);
+            }
+            return;
+        }
 
         Color baseColor = getObjectColor(obj);
 

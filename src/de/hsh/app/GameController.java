@@ -1,6 +1,7 @@
 package de.hsh.app;
 
 import de.hsh.app.objects.*;
+import de.hsh.audio.SoundManager;
 import de.hsh.persistence.PersistenceFassade;
 import de.hsh.persistence.UserSettings;
 
@@ -20,6 +21,7 @@ public class GameController {
     private int screenWidth = 800;
     private int screenHeight = 600;
     private boolean isGameOver = false;
+    private SoundManager soundManager;
 
     public GameController(GameModel gameModel, PersistenceFassade persistence) {
         this.model = gameModel;
@@ -28,6 +30,7 @@ public class GameController {
         this.gameTime = new Timer(16, e -> gameLoop());
         this.spawnTimer = new Timer(1000, e -> spawnObjekt());
         this.countdownTimer = new Timer(1000, e -> decrementTime());
+        this.soundManager = new SoundManager();
     }
 
     public void spielStarten(Level level) {
@@ -161,6 +164,8 @@ public class GameController {
                         level);
                 persistence.addScore(entry);
 
+                soundManager.playGameOver();
+
                 System.out.println("Spiel beendet! Punkte: " + score);
             }
         }
@@ -215,5 +220,13 @@ public class GameController {
 
     public boolean isGameOver() {
         return isGameOver;
+    }
+
+    public void playVirusChoppedSound() {
+        soundManager.playVirusChopped();
+    }
+
+    public void playAntivirusChoppedSound() {
+        soundManager.playAntivirusChopped();
     }
 }

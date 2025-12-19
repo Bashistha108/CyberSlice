@@ -15,6 +15,7 @@ public class UltraVirus extends SpielObjekt {
     public void onSlice(GameController controller) {
         controller.updatePunkte(20);
         controller.updateLeben(1);
+        controller.playVirusChoppedSound();
     }
 
     public static Color getColor() {

@@ -251,7 +251,11 @@ public class MainFrame extends JFrame {
                         "  ⚠ WARNING:\n" +
                         "  • You lose a life if a virus falls off the screen\n" +
                         "  • Game ends when time runs out or you lose all lives\n\n" +
-                        "  Good luck, and clean that system! 💻");
+                        "  Good luck, and clean that system! 💻\n\n" +
+                        "  📜 CREDITS:\n" +
+                        "  • Audio: FoolBoyMedia, Edimar_Ramide, LilMati (Freesound.org)\n" +
+                        "  • Virus Image: jemastock (Freepik.com)\n" +
+                        "  • Antivirus Image: Gemini");
         instructionsArea.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         panel.add(instructionsArea, BorderLayout.CENTER);
 
