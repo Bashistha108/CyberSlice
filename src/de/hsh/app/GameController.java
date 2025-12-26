@@ -1,7 +1,7 @@
 package de.hsh.app;
 
 import de.hsh.app.objects.*;
-import de.hsh.audio.SoundManager;
+import de.hsh.util.SoundManager;
 import de.hsh.persistence.PersistenceFassade;
 import de.hsh.persistence.UserSettings;
 
@@ -43,27 +43,36 @@ public class GameController {
         spawnTimer.setInitialDelay(0);
         gameTime.start();
         spawnTimer.start();
+        spawnTimer.start();
         countdownTimer.start();
+        soundManager.playBackgroundMusic();
     }
 
     public void spielPausieren() {
         gameTime.stop();
         spawnTimer.stop();
+        spawnTimer.stop();
         countdownTimer.stop();
+        soundManager.stopBackgroundMusic();
     }
 
     public void spielFortsetzen() {
         if (!isGameOver) {
             gameTime.start();
             spawnTimer.start();
+            spawnTimer.start();
             countdownTimer.start();
+            soundManager.playBackgroundMusic();
         }
     }
 
     public void spielStoppen() {
         gameTime.stop();
         spawnTimer.stop();
+        gameTime.stop();
+        spawnTimer.stop();
         countdownTimer.stop();
+        soundManager.stopBackgroundMusic();
         isGameOver = true;
         model.resetGame();
     }
@@ -126,7 +135,11 @@ public class GameController {
                     neuesObjekt = new UltraAntivirus(startX, startY, speed);
                     break;
                 case 5:
-                    neuesObjekt = new Uhr(startX, startY, speed);
+                    if (model.getZeit() > 60) {
+                        neuesObjekt = new Virus(startX, startY, speed);
+                    } else {
+                        neuesObjekt = new Uhr(startX, startY, speed);
+                    }
                     break;
                 default:
                     neuesObjekt = new USBStick(startX, startY, speed);
@@ -228,5 +241,9 @@ public class GameController {
 
     public void playAntivirusChoppedSound() {
         soundManager.playAntivirusChopped();
+    }
+
+    public void playSliceSound() {
+        soundManager.playSliceSound();
     }
 }
