@@ -7,8 +7,8 @@ import java.awt.Color;
 public class UltraVirus extends SpielObjekt {
     public UltraVirus(float posX, float posY, float geschwindigkeit) {
         super(posX, posY, geschwindigkeit);
-        this.width = 70;
-        this.height = 70;
+        this.width = 110;
+        this.height = 110;
     }
 
     @Override

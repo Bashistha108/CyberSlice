@@ -22,6 +22,10 @@ public class SpielPanel extends JPanel implements Observer {
     private boolean isPaused = false;
     private Image virusImage;
     private Image antivirusImage;
+    private Image clockImage;
+    private Image fileImage;
+    private Image powerImage;
+    private Image lifeImage;
 
     public SpielPanel(GameModel gameModel, GUIController guiController) {
         this.gameModel = gameModel;
@@ -52,6 +56,44 @@ public class SpielPanel extends JPanel implements Observer {
         } catch (Exception e) {
             System.err.println("Error loading antivirus image:");
             e.printStackTrace();
+            System.err.println("Error loading antivirus image:");
+            e.printStackTrace();
+        }
+
+        // Load clock image
+        try {
+            java.net.URL imgUrl = getClass().getResource("/de/hsh/images/clock.png");
+            if (imgUrl != null)
+                clockImage = javax.imageio.ImageIO.read(imgUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Load file image
+        try {
+            java.net.URL imgUrl = getClass().getResource("/de/hsh/images/file.png");
+            if (imgUrl != null)
+                fileImage = javax.imageio.ImageIO.read(imgUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Load power image
+        try {
+            java.net.URL imgUrl = getClass().getResource("/de/hsh/images/power.png");
+            if (imgUrl != null)
+                powerImage = javax.imageio.ImageIO.read(imgUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Load life image
+        try {
+            java.net.URL imgUrl = getClass().getResource("/de/hsh/images/life.png");
+            if (imgUrl != null)
+                lifeImage = javax.imageio.ImageIO.read(imgUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         setLayout(null); // Use absolute positioning for buttons
@@ -78,6 +120,9 @@ public class SpielPanel extends JPanel implements Observer {
                 if (isDragging && !isPaused) {
                     animationManager.addSlicePoint(e.getX(), e.getY());
                     handleSlice(e.getX(), e.getY());
+
+                    // Play slice sound
+                    guiController.getAppFassade().getGameController().playSliceSound();
                 }
             }
         };
@@ -214,8 +259,8 @@ public class SpielPanel extends JPanel implements Observer {
 
             // Background gradient
             GradientPaint bgGradient = new GradientPaint(
-                    0, 0, new Color(10, 10, 30),
-                    0, getHeight(), new Color(30, 10, 50));
+                    0, 0, new Color(245, 245, 255),
+                    0, getHeight(), new Color(220, 230, 240));
             g2.setPaint(bgGradient);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
@@ -249,13 +294,6 @@ public class SpielPanel extends JPanel implements Observer {
         if (virusImage != null && (obj instanceof Virus || obj instanceof UltraVirus)) {
             g2.drawImage(virusImage, x, y, size, size, null);
 
-            // Optional: Draw a subtle glow/outline to distinguish UltraVirus or make them
-            // pop
-            if (obj instanceof UltraVirus) {
-                g2.setColor(new Color(255, 0, 0, 100)); // Red glow
-                g2.setStroke(new BasicStroke(3));
-                g2.drawOval(x - 2, y - 2, size + 4, size + 4);
-            }
             return;
         }
 
@@ -263,12 +301,30 @@ public class SpielPanel extends JPanel implements Observer {
         if (antivirusImage != null && (obj instanceof Antivirus || obj instanceof UltraAntivirus)) {
             g2.drawImage(antivirusImage, x, y, size, size, null);
 
-            // Optional: Draw a subtle glow/outline for UltraAntivirus
-            if (obj instanceof UltraAntivirus) {
-                g2.setColor(new Color(0, 255, 0, 100)); // Green glow
-                g2.setStroke(new BasicStroke(3));
-                g2.drawOval(x - 2, y - 2, size + 4, size + 4);
-            }
+            return;
+        }
+
+        // Use image for Clock
+        if (clockImage != null && obj instanceof Uhr) {
+            g2.drawImage(clockImage, x, y, size, size, null);
+            return;
+        }
+
+        // Use image for File
+        if (fileImage != null && obj instanceof Datei) {
+            g2.drawImage(fileImage, x, y, size, size, null);
+            return;
+        }
+
+        // Use image for USBStick (Power)
+        if (powerImage != null && obj instanceof USBStick) {
+            g2.drawImage(powerImage, x, y, size, size, null);
+            return;
+        }
+
+        // Use image for Life
+        if (lifeImage != null && obj instanceof Life) {
+            g2.drawImage(lifeImage, x, y, size, size, null);
             return;
         }
 
@@ -387,6 +443,9 @@ public class SpielPanel extends JPanel implements Observer {
         g2.setColor(new Color(255, 50, 50));
         g2.setFont(new Font("Arial", Font.BOLD, 60));
         String gameOverText = "GAME OVER";
+        if (gameModel.getZeit() <= 0) {
+            gameOverText = "TIME UP";
+        }
         FontMetrics fm = g2.getFontMetrics();
         int textWidth = fm.stringWidth(gameOverText);
         g2.drawString(gameOverText, (getWidth() - textWidth) / 2, getHeight() / 2 - 80);

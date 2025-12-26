@@ -1,12 +1,19 @@
 package de.hsh.app;
 
+/**
+ * The SpielObjekt class represents a general game object that can move and be
+ * interacted with.
+ * Specific game objects (e.g., Antivirus, Datei) are expected to extend this
+ * abstract class and
+ * define their own specific behavior.
+ */
 public abstract class SpielObjekt {
     protected float posX;
     protected float posY;
     protected float geschwindigkeit;
 
-    protected int width = 50;
-    protected int height = 50;
+    protected int width = 80;
+    protected int height = 80;
 
     public SpielObjekt(float posX, float posY, float geschwindigkeit) {
         this.posX = posX;
