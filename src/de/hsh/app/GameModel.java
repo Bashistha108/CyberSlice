@@ -4,6 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+
+/**
+ * Represents the core data model for the game, managing the state of the game.
+ * This class includes details such as player score, lives, time left, level,
+ * power mode status, player name, and the list of active game objects.
+ *
+ * The GameModel class is observable, allowing other components of the game to
+ * observe changes to the game state.
+ *
+ * @author bashistha joshi
+ * @version 1.0
+ */
 public class GameModel extends Observable {
     private int punkte;
     private int leben;

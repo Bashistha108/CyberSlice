@@ -4,6 +4,15 @@ import de.hsh.app.CyberSliceFassade;
 import de.hsh.app.Level;
 import de.hsh.app.MainFrame;
 
+
+/**
+ * The GUIController is responsible for managing user interaction within the graphical user interface.
+ * It serves as a bridge between the view layer and the application logic encapsulated in the CyberSliceFassade.
+ * The controller handles button clicks, navigation between panels, and user-driven events such as mouse movements.
+ *
+ * @author bashistha
+ * @version 1.0
+ */
 public class GUIController {
     private CyberSliceFassade appFassade;
     private MainFrame mainFrame;

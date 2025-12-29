@@ -2,12 +2,17 @@ package de.hsh.app.objects;
 
 import de.hsh.app.GameController;
 import de.hsh.app.SpielObjekt;
-import java.awt.Color;
+
+
 
 /**
- * The Antivirus class represents an antivirus object within the game that can be
- * interacted with by the player. It is a type of {@link SpielObjekt} and has
- * specific behaviors and attributes that differentiate it from other game objects.
+ * The Antivirus class represents a game object in a 2D environment
+ * that penalizes the player when interacted with. It extends the
+ * SpielObjekt class, inheriting the common behaviors and attributes
+ * for game objects such as position and movement.
+ *
+ * This object is expected to represent an antivirus element in the game
+ * that reduces the player's score and health when sliced.
  */
 public class Antivirus extends SpielObjekt {
     public Antivirus(float posX, float posY, float geschwindigkeit) {
@@ -19,10 +24,6 @@ public class Antivirus extends SpielObjekt {
         controller.updatePunkte(-10);
         controller.updateLeben(-1);
         controller.playAntivirusChoppedSound();
-    }
-
-    public static Color getColor() {
-        return new Color(50, 205, 50);
     }
 
     public static String getDisplayName() {

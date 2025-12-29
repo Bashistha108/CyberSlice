@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout;
 
     public MainFrame() {
-        super("Cyber Slice - Clean Your System!");
+        super("Cyber Slice - PC gegen Viren sichern !!");
 
         // 1. Controller initialisieren
         this.guiController = new GUIController(this);
@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         GameModel gameModel = fassade.getGameModel();
 
         // Update screen dimensions in game controller
-        fassade.getGameController().setScreenDimensions(800, 600);
+        fassade.getGameController().setScreenDimensions(1200, 800);
 
         // 3. Haupt-Layout (CardLayout)
         cardLayout = new CardLayout();
@@ -63,7 +63,7 @@ public class MainFrame extends JFrame {
         // 7. Frame konfigurieren
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(cardPanel);
-        this.setSize(800, 600);
+        this.setSize(1200, 800);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
@@ -88,6 +88,7 @@ public class MainFrame extends JFrame {
             }
         };
 
+        // Arrange the child compnent with GridBagLayout
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -101,7 +102,7 @@ public class MainFrame extends JFrame {
         titleLabel.setForeground(new Color(0, 255, 255));
         panel.add(titleLabel, gbc);
 
-        JLabel subtitleLabel = new JLabel("Clean Your System!");
+        JLabel subtitleLabel = new JLabel("Computer gegen Viren sichern!");
         subtitleLabel.setFont(new Font("Arial", Font.ITALIC, 20));
         subtitleLabel.setForeground(new Color(200, 200, 255));
         panel.add(subtitleLabel, gbc);
@@ -116,27 +117,27 @@ public class MainFrame extends JFrame {
         gbc.insets = new Insets(5, 50, 5, 50);
 
         // Level Selection Button
-        JButton levelButton = createStyledButton("🎯 SELECT LEVEL", new Color(100, 100, 200));
+        JButton levelButton = createStyledButton("SELECT LEVEL", new Color(100, 100, 200));
         levelButton.addActionListener(e -> guiController.onLevelAuswahlClicked());
         panel.add(levelButton, gbc);
 
         // Leaderboard Button
-        JButton leaderboardButton = createStyledButton("🏆 LEADERBOARD", new Color(200, 150, 50));
+        JButton leaderboardButton = createStyledButton("LEADERBOARD", new Color(200, 150, 50));
         leaderboardButton.addActionListener(e -> guiController.onLeaderboardClicked());
         panel.add(leaderboardButton, gbc);
 
         // Settings Button
-        JButton settingsButton = createStyledButton("⚙ SETTINGS", new Color(150, 100, 50));
+        JButton settingsButton = createStyledButton("SETTINGS", new Color(150, 100, 50));
         settingsButton.addActionListener(e -> showPanel("Einstellungen"));
         panel.add(settingsButton, gbc);
 
         // Instructions Button
-        JButton anleitungButton = createStyledButton("❓ INSTRUCTIONS", new Color(100, 150, 150));
+        JButton anleitungButton = createStyledButton("INSTRUCTIONS", new Color(100, 150, 150));
         anleitungButton.addActionListener(e -> guiController.onAnleitungClicked());
         panel.add(anleitungButton, gbc);
 
         // Exit Button
-        JButton exitButton = createStyledButton("✖ EXIT", new Color(150, 50, 50));
+        JButton exitButton = createStyledButton("EXIT", new Color(150, 50, 50));
         exitButton.addActionListener(e -> guiController.onExitClicked());
         panel.add(exitButton, gbc);
 
@@ -176,26 +177,26 @@ public class MainFrame extends JFrame {
         gbc.insets = new Insets(30, 50, 10, 50);
 
         // Easy Level
-        JButton easyButton = createStyledButton("🟢 EASY", new Color(50, 150, 50));
+        JButton easyButton = createStyledButton("EASY", new Color(50, 150, 50));
         easyButton.addActionListener(e -> guiController.onSpielStartenClicked(Level.EASY));
         panel.add(easyButton, gbc);
 
         gbc.insets = new Insets(10, 50, 10, 50);
 
         // Intermediate Level
-        JButton intermediateButton = createStyledButton("🟡 INTERMEDIATE", new Color(200, 150, 50));
+        JButton intermediateButton = createStyledButton("INTERMEDIATE", new Color(200, 150, 50));
         intermediateButton.addActionListener(e -> guiController.onSpielStartenClicked(Level.INTERMEDIATE));
         panel.add(intermediateButton, gbc);
 
         // Master Level
-        JButton masterButton = createStyledButton("🔴 MASTER", new Color(150, 50, 50));
+        JButton masterButton = createStyledButton("MASTER", new Color(150, 50, 50));
         masterButton.addActionListener(e -> guiController.onSpielStartenClicked(Level.MASTER));
         panel.add(masterButton, gbc);
 
         gbc.insets = new Insets(30, 50, 10, 50);
 
         // Back Button
-        JButton backButton = createStyledButton("← BACK", new Color(100, 100, 100));
+        JButton backButton = createStyledButton("<-- BACK", new Color(100, 100, 100));
         backButton.addActionListener(e -> showPanel("Hauptmenü"));
         panel.add(backButton, gbc);
 
@@ -235,31 +236,30 @@ public class MainFrame extends JFrame {
         instructionsArea.setForeground(Color.WHITE);
         instructionsArea.setFont(new Font("Arial", Font.PLAIN, 16));
         instructionsArea.setText(
-                "\n  🎯 OBJECTIVE:\n" +
+                "\n    OBJECTIVE:\n" +
                         "  Slice viruses and avoid slicing antiviruses and files!\n\n" +
-                        "  🖱 CONTROLS:\n" +
-                        "  • Drag your mouse across objects to slice them\n" +
-                        "  • Watch for the slice trail effect\n\n" +
-                        "  📦 OBJECTS:\n" +
-                        "  • V (Red) - Virus: +10 points\n" +
-                        "  • UV (Orange) - Ultra Virus: +20 points, +1 life\n" +
-                        "  • A (Green) - Antivirus: -10 points, -1 life (DON'T SLICE!)\n" +
-                        "  • UA (Dark Green) - Ultra Antivirus: -20 points, -2 lives (DON'T SLICE!)\n" +
-                        "  • F (Gray) - File: -5 points (DON'T SLICE!)\n" +
-                        "  • ⏰ (Cyan) - Clock: +10 seconds\n" +
-                        "  • ⚡ (Gold) - USB Stick: Activates POWER MODE (2x points!)\n\n" +
-                        "  ⚠ WARNING:\n" +
-                        "  • You lose a life if a virus falls off the screen\n" +
-                        "  • Game ends when time runs out or you lose all lives\n\n" +
-                        "  Good luck, and clean that system! 💻\n\n" +
-                        "  📜 CREDITS:\n" +
-                        "  • Audio: FoolBoyMedia, Edimar_Ramide, LilMati (Freesound.org)\n" +
-                        "  • Virus Image: jemastock (Freepik.com)\n" +
-                        "  • Antivirus Image: Gemini");
+                        "  CONTROLS:\n" +
+                        "  Drag your mouse across objects to slice them\n" +
+                        "  OBJECTS:\n" +
+                        "    Virus: +10 points\n" +
+                        "    Ultra Virus (Bigger size than Virus): +20 points, +1 life\n" +
+                        "    Antivirus: -10 points, -1 life (DON'T SLICE!)\n" +
+                        "    Ultra Antivirus(Bigger size than Antivirus): -20 points, -2 lives (DON'T SLICE!)\n" +
+                        "    File: -5 points (DON'T SLICE!)\n" +
+                        "    Clock: +10 seconds but only when time < 60s\n" +
+                        "    Power mode: Activates POWER MODE (2x points!)\n\n" +
+                        "  WARNING:\n" +
+                        "    You lose a life if a virus falls off the screen\n" +
+                        "    Game ends when time runs out or you lose all lives\n\n" +
+                        "  Good luck, and clean that system!\n\n" +
+                        "  CREDITS:\n" +
+                        "  Audio: FoolBoyMedia, Edimar_Ramide, LilMati (Freesound.org)\n" +
+                        "  Virus Image: jemastock (Freepik.com)\n" +
+                        "  Antivirus Image: Freepik.com");
         instructionsArea.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         panel.add(instructionsArea, BorderLayout.CENTER);
 
-        JButton backButton = createStyledButton("← BACK TO MENU", new Color(100, 100, 100));
+        JButton backButton = createStyledButton("<-- BACK TO MENU", new Color(100, 100, 100));
         backButton.addActionListener(e -> showPanel("Hauptmenü"));
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);

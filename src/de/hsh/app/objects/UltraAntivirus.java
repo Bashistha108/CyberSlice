@@ -2,7 +2,7 @@ package de.hsh.app.objects;
 
 import de.hsh.app.GameController;
 import de.hsh.app.SpielObjekt;
-import java.awt.Color;
+
 
 public class UltraAntivirus extends SpielObjekt {
     public UltraAntivirus(float posX, float posY, float geschwindigkeit) {
@@ -16,10 +16,6 @@ public class UltraAntivirus extends SpielObjekt {
         controller.updatePunkte(-20);
         controller.updateLeben(-2);
         controller.playAntivirusChoppedSound();
-    }
-
-    public static Color getColor() {
-        return new Color(34, 139, 34); // Forest Green
     }
 
     public static String getDisplayName() {

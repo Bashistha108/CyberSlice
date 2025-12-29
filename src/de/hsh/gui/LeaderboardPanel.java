@@ -8,6 +8,23 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
+
+/**
+ * The LeaderboardPanel class is a custom JPanel implementation for displaying the leaderboard in the GUI.
+ * It provides a styled table to showcase player rankings, scores, levels, and associated dates, along with
+ * navigation controls to return to the main menu.
+ *
+ * This class relies on the GUIController for data fetching and managing navigation between GUI panels.
+ * It also includes custom rendering and styling for the leaderboard display and buttons.
+ *
+ * Key features:
+ * - Styled table to display leaderboard entries with custom fonts, colors, and alignment.
+ * - Title section with a decorative heading.
+ * - Back button to navigate to the main menu.
+ * - Gradient background and polished user interface elements.
+ *
+ * @author bashistha
+ */
 public class LeaderboardPanel extends JPanel {
     private GUIController guiController;
     private JTable leaderboardTable;
@@ -18,7 +35,7 @@ public class LeaderboardPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Title
-        JLabel titleLabel = new JLabel("🏆 LEADERBOARD", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("LEADERBOARD", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
         titleLabel.setForeground(new Color(255, 215, 0));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -72,7 +89,7 @@ public class LeaderboardPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // Back button
-        JButton backButton = createStyledButton("← BACK TO MENU", new Color(100, 100, 100));
+        JButton backButton = createStyledButton("<-- BACK TO MENU", new Color(100, 100, 100));
         backButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) getParent().getLayout();
             cl.show(getParent(), "Hauptmenü");
@@ -113,11 +130,11 @@ public class LeaderboardPanel extends JPanel {
     private String getRankEmoji(int rank) {
         switch (rank) {
             case 1:
-                return "🥇";
+                return "Gold";
             case 2:
-                return "🥈";
+                return "Silver";
             case 3:
-                return "🥉";
+                return "Bronze";
             default:
                 return "";
         }

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manages all active animations and effects in the game.
+ * Manages the animation effects within a game or application, including particle effects
+ * and slice trail effects. Provides functionality to add new effects, update their state,
+ * and render them to the screen.
  */
 public class AnimationManager {
     private List<ParticleEffect> particleEffects;

@@ -47,7 +47,7 @@ public class LeaderboardEntry implements Serializable, Comparable<LeaderboardEnt
 
     @Override
     public int compareTo(LeaderboardEntry other) {
-        // Sort by score descending (higher scores first)
+        // Sort by score descending
         return Integer.compare(other.score, this.score);
     }
 

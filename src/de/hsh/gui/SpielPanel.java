@@ -13,6 +13,14 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.Observable;
 import java.util.Observer;
 
+
+/**
+ * Represents the main game panel responsible for rendering the current game state,
+ * handling user interactions, and managing various game components, animations,
+ * and game objects. The SpielPanel observes changes in the GameModel and updates the view accordingly.
+ * It also interacts with the GUIController to handle game logic and game state transitions.
+ *
+ */
 public class SpielPanel extends JPanel implements Observer {
     private GameModel gameModel;
     private GUIController guiController;
@@ -147,7 +155,7 @@ public class SpielPanel extends JPanel implements Observer {
         add(backButton);
 
         // Game Over buttons (initially hidden)
-        JButton restartButton = new JButton("🔄 RESTART");
+        JButton restartButton = new JButton("RESTART");
         restartButton.setBounds(getWidth() / 2 - 220, getHeight() / 2 + 80, 200, 50);
         styleButton(restartButton, new Color(50, 150, 50));
         restartButton.addActionListener(e -> {
@@ -156,7 +164,7 @@ public class SpielPanel extends JPanel implements Observer {
         restartButton.setVisible(false);
         add(restartButton);
 
-        JButton menuButton = new JButton("🏠 MENU");
+        JButton menuButton = new JButton("MENU");
         menuButton.setBounds(getWidth() / 2 + 20, getHeight() / 2 + 80, 200, 50);
         styleButton(menuButton, new Color(150, 50, 50));
         menuButton.addActionListener(e -> {
@@ -212,11 +220,11 @@ public class SpielPanel extends JPanel implements Observer {
             SpielObjekt obj = gameModel.getObjektListe().get(i);
             if (obj.isClicked(x, y)) {
                 // Create particle effect
-                Color particleColor = getObjectColor(obj);
+              //  Color particleColor = getObjectColor(obj);
                 animationManager.addParticleEffect(
                         obj.getPosX() + obj.getWidth() / 2,
                         obj.getPosY() + obj.getHeight() / 2,
-                        particleColor,
+                        Color.blue,
                         15);
 
                 // Handle the slice
@@ -224,26 +232,6 @@ public class SpielPanel extends JPanel implements Observer {
                 break;
             }
         }
-    }
-
-    private Color getObjectColor(SpielObjekt obj) {
-        if (obj instanceof Virus)
-            return Virus.getColor();
-        if (obj instanceof UltraVirus)
-            return UltraVirus.getColor();
-        if (obj instanceof Antivirus)
-            return Antivirus.getColor();
-        if (obj instanceof UltraAntivirus)
-            return UltraAntivirus.getColor();
-        if (obj instanceof Datei)
-            return Datei.getColor();
-        if (obj instanceof Uhr)
-            return Uhr.getColor();
-        if (obj instanceof USBStick)
-            return USBStick.getColor();
-        if (obj instanceof Life)
-            return Life.getColor();
-        return Color.WHITE;
     }
 
     @Override
@@ -328,72 +316,7 @@ public class SpielPanel extends JPanel implements Observer {
             return;
         }
 
-        Color baseColor = getObjectColor(obj);
-
-        // Draw shadow
-        g2.setColor(new Color(0, 0, 0, 50));
-        g2.fillOval(x + 3, y + 3, size, size);
-
-        // Draw gradient fill
-        RadialGradientPaint gradient = new RadialGradientPaint(
-                x + size / 2, y + size / 2, size / 2,
-                new float[] { 0.0f, 0.7f, 1.0f },
-                new Color[] {
-                        brighten(baseColor, 1.3f),
-                        baseColor,
-                        darken(baseColor, 0.7f)
-                });
-        g2.setPaint(gradient);
-        g2.fillOval(x, y, size, size);
-
-        // Draw outline
-        g2.setColor(brighten(baseColor, 1.5f));
-        g2.setStroke(new BasicStroke(2));
-        g2.drawOval(x, y, size, size);
-
-        // Draw label
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Arial", Font.BOLD, 10));
-        String label = getObjectLabel(obj);
-        FontMetrics fm = g2.getFontMetrics();
-        int labelWidth = fm.stringWidth(label);
-        g2.drawString(label, x + (size - labelWidth) / 2, y + size / 2 + 4);
     }
-
-    private String getObjectLabel(SpielObjekt obj) {
-        if (obj instanceof Virus)
-            return "V";
-        if (obj instanceof UltraVirus)
-            return "UV";
-        if (obj instanceof Antivirus)
-            return "A";
-        if (obj instanceof UltraAntivirus)
-            return "UA";
-        if (obj instanceof Datei)
-            return "F";
-        if (obj instanceof Uhr)
-            return "⏰";
-        if (obj instanceof USBStick)
-            return "⚡";
-        if (obj instanceof Life)
-            return "❤";
-        return "?";
-    }
-
-    private Color brighten(Color color, float factor) {
-        int r = Math.min(255, (int) (color.getRed() * factor));
-        int g = Math.min(255, (int) (color.getGreen() * factor));
-        int b = Math.min(255, (int) (color.getBlue() * factor));
-        return new Color(r, g, b);
-    }
-
-    private Color darken(Color color, float factor) {
-        int r = (int) (color.getRed() * factor);
-        int g = (int) (color.getGreen() * factor);
-        int b = (int) (color.getBlue() * factor);
-        return new Color(r, g, b);
-    }
-
     private void drawHUD(Graphics2D g2) {
         // HUD background panel
         g2.setColor(new Color(0, 0, 0, 150));
@@ -408,16 +331,16 @@ public class SpielPanel extends JPanel implements Observer {
 
         // Points
         g2.setColor(new Color(255, 215, 0));
-        g2.drawString("⭐ Points: " + gameModel.getPunkte(), 15, 25);
+        g2.drawString("Points: " + gameModel.getPunkte(), 15, 25);
 
         // Lives
         g2.setColor(new Color(255, 100, 100));
-        String hearts = "❤".repeat(Math.max(0, gameModel.getLeben()));
+        String hearts = "+".repeat(Math.max(0, gameModel.getLeben()));
         g2.drawString("Lives: " + hearts, 15, 50);
 
         // Time
         g2.setColor(new Color(100, 200, 255));
-        g2.drawString("⏱ Time: " + gameModel.getZeit() + "s", 15, 75);
+        g2.drawString("Time: " + gameModel.getZeit() + "s", 15, 75);
 
         // Level
         g2.setColor(new Color(200, 200, 200));
@@ -430,7 +353,7 @@ public class SpielPanel extends JPanel implements Observer {
             g2.fill(new RoundRectangle2D.Float(220, 10, 150, 40, 10, 10));
             g2.setColor(new Color(255, 100, 0));
             g2.setFont(new Font("Arial", Font.BOLD, 18));
-            g2.drawString("⚡ POWER MODE!", 230, 35);
+            g2.drawString("POWER MODE!", 230, 35);
         }
     }
 

@@ -3,6 +3,14 @@ package de.hsh.app;
 import de.hsh.persistence.PersistenceFassade;
 import de.hsh.persistence.SettingsBroker;
 
+/**
+ * CyberSliceFassade dient als singleton fassade zur Verbindung zwischen GameModel,
+ * GameController und der Persistence Schicht
+ *
+ * @author bashistha joshi
+ * @version 1.0
+ *
+ */
 public class CyberSliceFassade {
 
     private static CyberSliceFassade instance;

@@ -9,6 +9,15 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.Timer;
 
+
+/**
+ * The GameController class manages the core game logic, including updates to the game state,
+ * object spawning, collision detection, power-up activation, and interactions with the model
+ * and persistence layer. It also handles the management of sound effects and background music.
+ *
+ * @author bashistha joshi
+ * @version 1.0
+ */
 public class GameController {
 
     private GameModel model;
@@ -110,13 +119,13 @@ public class GameController {
         float startY = -50;
         float speed = (float) model.getLevel().getObjectSpeed();
         SpielObjekt neuesObjekt;
-        int typ = random.nextInt(100); // Changed to 100 for percentage-based spawning
+        int typ = random.nextInt(100); // For percentage spawing
 
         if (typ < 5) {
-            // 5% chance for Life (rare)
+            // 5% chance ->  Life
             neuesObjekt = new Life(startX, startY, speed);
         } else {
-            // Remaining 95% distributed among other objects
+            // 95% distributed among other objects
             int objectType = random.nextInt(7);
             switch (objectType) {
                 case 0:
