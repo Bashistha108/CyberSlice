@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Manages a particle explosion effect when objects are sliced.
+ * Represents a particle effect consisting of multiple particles that can be
+ * used to simulate visual effects such as explosions or other particle-based animations.
  */
 public class ParticleEffect {
     private List<Particle> particles;

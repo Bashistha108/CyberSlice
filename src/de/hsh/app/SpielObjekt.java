@@ -1,11 +1,13 @@
 package de.hsh.app;
 
+
 /**
- * The SpielObjekt class represents a general game object that can move and be
- * interacted with.
- * Specific game objects (e.g., Antivirus, Datei) are expected to extend this
- * abstract class and
- * define their own specific behavior.
+ * Represents an abstract game object in a 2D environment. This class provides
+ * common attributes and behaviors for objects that can move, be interacted
+ * with, and interact with the game controller.
+ *
+ * Subclasses should define specific behavior for when the object is "sliced"
+ * or interacted with by the player.
  */
 public abstract class SpielObjekt {
     protected float posX;

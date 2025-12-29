@@ -3,6 +3,27 @@ package de.hsh.gui;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * The SettingsPanel class represents a settings screen in the application's graphical user interface,
+ * allowing users to modify and save application settings such as the player name and volume.
+ * It extends JPanel and customizes its layout and appearance.
+ *
+ * This panel contains various components including a text field for player name input,
+ * a slider for volume adjustment, and buttons for saving and navigating back to the main menu.
+ *
+ * Components:
+ * - Title label for the settings panel
+ * - Player name input field
+ * - Volume adjustment slider
+ * - Save button to persist changes
+ * - Back button to return to the main menu
+ *
+ * After component interactions, the panel communicates with the GUIController
+ * to handle logic, save settings, or navigate to other parts of the application.
+ *
+ * @author bashistha
+ */
 public class SettingsPanel extends JPanel {
     private GUIController guiController;
     private JTextField nameField;
@@ -74,7 +95,7 @@ public class SettingsPanel extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         buttonPanel.setOpaque(false);
 
-        saveButton = createStyledButton("💾 SAVE", new Color(50, 150, 50));
+        saveButton = createStyledButton("SAVE", new Color(50, 150, 50));
         saveButton.addActionListener(e -> {
             String name = nameField.getText();
             float volume = volumeSlider.getValue() / 100.0f;
@@ -82,7 +103,7 @@ public class SettingsPanel extends JPanel {
         });
         buttonPanel.add(saveButton);
 
-        backButton = createStyledButton("← BACK", new Color(100, 100, 100));
+        backButton = createStyledButton("<-- BACK", new Color(100, 100, 100));
         backButton.addActionListener(e -> {
             guiController.getAppFassade().getGameModel().setChanged();
             guiController.getAppFassade().getGameModel().notifyObservers();

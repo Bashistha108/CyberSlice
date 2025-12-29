@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
  * that it is executed on the Event Dispatch Thread (EDT) to
  * maintain thread safety in Swing applications.
  *
- * @author bashistha
+ * @author bashistha joshi
  * @version 1.0
  */
 public class Main {

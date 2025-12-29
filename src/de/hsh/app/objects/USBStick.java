@@ -2,8 +2,13 @@ package de.hsh.app.objects;
 
 import de.hsh.app.GameController;
 import de.hsh.app.SpielObjekt;
-import java.awt.Color;
 
+
+/**
+ * Represents a USB stick game object in a 2D environment, extending the generic
+ * behavior provided by the SpielObjekt class. The USB stick can activate a
+ * specific power-up mode in the game when sliced.
+ */
 public class USBStick extends SpielObjekt {
     public USBStick(float posX, float posY, float geschwindigkeit) {
         super(posX, posY, geschwindigkeit);
@@ -14,9 +19,6 @@ public class USBStick extends SpielObjekt {
         controller.aktivierePowerModus();
     }
 
-    public static Color getColor() {
-        return new Color(255, 215, 0);
-    }
 
     public static String getDisplayName() {
         return "USB Stick";

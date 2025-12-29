@@ -23,7 +23,7 @@ public class SliceEffect {
 
     public void addPoint(int x, int y) {
         trailPoints.add(new Point2D.Float(x, y));
-        // Keep only last 20 points for performance
+        // Keeping only last 20 points for performance
         if (trailPoints.size() > 20) {
             trailPoints.remove(0);
         }
